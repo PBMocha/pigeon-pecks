@@ -13,6 +13,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
+        factory(App\User::class)->create(['name'=>'Tester', 'email'=>'tester@test.com']); //password = password
+        factory(App\User::class, 10)->create();
 
 
     }

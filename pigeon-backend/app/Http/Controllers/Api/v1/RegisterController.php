@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\COntracts\Validation\Validator;
 
 
 class RegisterController extends Controller
@@ -20,20 +21,23 @@ class RegisterController extends Controller
 
         //Validate request
 
-        $validate = $request->validate([
+
+        $validate = validator($request->validate([
             'name' => 'required|string|unique:App\User,name',
             'email' => 'required|email|unique:App\User,email',
             'password' => 'required|password:api',
             'c_password' => 'required|same:password',
-        ]);
+        ]));
+
+        //return response()->json($validate->all());
 
         if ($validate->fails()) {
             return response()->json(['error'=>$validate->errors()], 401);
         }
 
         $user = User::create([
-            'name' => $validate->name,
-            'email' => $validate->email,
+            'name' => $validate['name'],
+            'email' => $validate['email'],
             'password' => Hash::make($validate->password),
         ]);
 
