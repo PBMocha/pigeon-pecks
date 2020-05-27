@@ -21,13 +21,17 @@ class RegisterController extends Controller
 
         //Validate request
 
+        //return response()->json(['test'=>'if it finds this controller']);
 
-        $validate = validator($request->validate([
+        //return response()->json($request->all());
+
+        //There was problem with request validation, prevented response
+        $validate = validator($request->all(), [
             'name' => 'required|string|unique:App\User,name',
             'email' => 'required|email|unique:App\User,email',
-            'password' => 'required|password:api',
+            'password' => 'required',
             'c_password' => 'required|same:password',
-        ]));
+        ]);
 
         //return response()->json($validate->all());
 
@@ -36,9 +40,9 @@ class RegisterController extends Controller
         }
 
         $user = User::create([
-            'name' => $validate['name'],
-            'email' => $validate['email'],
-            'password' => Hash::make($validate->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
         $accessToken = $user->createToken('apiToken')->accessToken;

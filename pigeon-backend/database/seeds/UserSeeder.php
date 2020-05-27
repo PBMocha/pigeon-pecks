@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         //
         factory(App\User::class)->create(['name'=>'Tester', 'email'=>'tester@test.com']); //password = password
-        factory(App\User::class, 10)->create();
+        factory(App\User::class, 10)->create(); // create and store 10 dummy users to the database
 
 
     }
