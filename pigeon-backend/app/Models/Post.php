@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     //
-
     protected $fillable = ['title', 'body', 'user_id', 'image_id', 'likes'];
 
     //TODO: Create relationship with users
@@ -17,6 +15,7 @@ class Post extends Model
     }
 
     //TODO: Create relationship with profile
+
 
     //TODO: Create relationship with comments
     public function comments() {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
+use App\Models\User;
 
 
 class LoginController extends Controller
@@ -29,16 +29,19 @@ class LoginController extends Controller
 
         $user = User::findOrFail(Auth::id());
 
+        //$user = Auth::user();
+
         $accessToken = $user->createToken('apiToken')->accessToken;
 
         return response(['user' => Auth::user(), 'token' => $accessToken]);
     }
 
-    public function logout() {
-        $user = Auth::user() ?? 'No one is logged in!';
+    public function logout(Request $request) {
+
+        $success = $request->user(); //->token()->revokeToken;
 
 
-        return response()->json(['user' => $user]);
+        return response()->json(['success' => $success] ,200);
 
     }
 }
