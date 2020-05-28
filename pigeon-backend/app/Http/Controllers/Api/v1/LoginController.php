@@ -24,7 +24,7 @@ class LoginController extends Controller
         ]);
 
         if(!Auth::attempt($credentials)) {
-            return response([ 'message' => 'Invalid Credentials' ]);
+            return response([ 'message' => 'Invalid Credentials' ], 401);
         }
 
         $user = User::findOrFail(Auth::id());
@@ -32,5 +32,13 @@ class LoginController extends Controller
         $accessToken = $user->createToken('apiToken')->accessToken;
 
         return response(['user' => Auth::user(), 'token' => $accessToken]);
+    }
+
+    public function logout() {
+        $user = Auth::user() ?? 'No one is logged in!';
+
+
+        return response()->json(['user' => $user]);
+
     }
 }

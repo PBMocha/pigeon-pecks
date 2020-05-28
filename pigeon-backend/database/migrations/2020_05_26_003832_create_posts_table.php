@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreatePostsTable extends Migration
 {
@@ -17,13 +18,15 @@ class CreatePostsTable extends Migration
 
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('image_id'); //
+            $table->unsignedBigInteger('image_id')->nullable(); //
             $table->string('title');
             $table->text('body');
-            $table->bigInteger('likes');
+            $table->bigInteger('likes')->default(0);
             $table->timestamps();
 
+            //Might change this to have the forein key as profile instead
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
