@@ -15,7 +15,9 @@ class Post extends Model
     }
 
     //TODO: Create relationship with profile
-
+    public function profile() {
+        $this->belongsTo(User::class);
+    }
 
     //TODO: Create relationship with comments
     public function comments() {

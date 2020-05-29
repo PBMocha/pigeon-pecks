@@ -10,12 +10,21 @@ use App\Models\User;
 
 class PostController extends Controller
 {
-    //
 
-    public function index(Request $id) {
+    public function show($id) {
+        $post = Post::findOrFail($id);
+        return response()->json([ 'post' => $post ]);
+    }
 
-        $user = User::find($id);
-        $posts = $user->posts()->all(); // GET all posts by this user
+    //Get all posts by a specific user
+    public function postsByUser($user) {
+
+        //Not sure if this is the best way to get all posts from a user
+
+        //$user = Auth::user();
+
+        $posts = Post::where('user_id', $user)->get();// GET all posts by this user
+        //$posts = $user->posts->all();
 
         return response()->json(['post' => $posts]);
     }
@@ -32,4 +41,6 @@ class PostController extends Controller
 
         return response()->json(['post' => $post, 'user' => Auth::user() ], 200);
     }
+
+
 }

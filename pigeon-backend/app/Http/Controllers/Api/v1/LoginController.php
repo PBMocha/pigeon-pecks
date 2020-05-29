@@ -27,10 +27,10 @@ class LoginController extends Controller
             return response([ 'message' => 'Invalid Credentials' ], 401);
         }
 
-        $user = User::findOrFail(Auth::id());
+        $user = Auth::user(); //User::findOrFail(Auth::id());
 
         //$user = Auth::user();
-
+        //Giving me a linter error idk why
         $accessToken = $user->createToken('apiToken')->accessToken;
 
         return response(['user' => Auth::user(), 'token' => $accessToken]);
@@ -38,10 +38,8 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
 
-        $success = $request->user(); //->token()->revokeToken;
-
-
-        return response()->json(['success' => $success] ,200);
-
+        $user = Auth::user();
+        $success = $user->token()->revoke();
+        return response()->json(['success' => 'Logged out' ] ,200);
     }
 }

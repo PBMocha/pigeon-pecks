@@ -19,18 +19,26 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-
+//Routes related to logged
 Route::prefix('/user')->group(function() {
 
     Route::post('/login', 'Api\v1\LoginController@login');
     Route::post('/register', 'Api\v1\RegisterController@register');
-    Route::get('/logout', 'Api\v1\LoginController@logout')->middleware('auth:api');
-    Route::get('/me', 'Api\v1\UserController@index')->middleware('auth:api'); //for testing purposes
 
-    //
-    Route::get('{user}/posts', 'Api\v1\PostController@index'); //GET: all posts from a specific user
-    Route::post('/post', 'Api\v1\PostController@store')->middleware('auth:api');
-    // Route::get('/posts/{post}', 'Api/v1/PostsConrtoller@show');
+    Route::group(['middleware' => ['auth:api']], function () {
+
+        Route::get('/logout', 'Api\v1\LoginController@logout');
+        Route::get('/profile', 'Api\v1\UserController@index');
+        // Route::put('/profile/edit', 'Api\v1\ProfileController@edit');
+
+        //
+        Route::post('/post', 'Api\v1\PostController@store');
+
+        // Route::get('/posts/{post}', 'Api/v1/PostsConrtoller@show');
+    });
 });
+
+Route::get('/post/{id}', 'Api\v1\PostController@show');
+Route::get('/posts/{user?}', 'Api\v1\PostController@postsByUser'); //GET: all posts from a specific user
 
 
