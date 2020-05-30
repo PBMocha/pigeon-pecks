@@ -18,20 +18,20 @@ class LikedPostsController extends Controller
      *
      */
     public function index() {
-        $user = User::findOrFail(Auth::id());
-
-        $posts = $user->likedPosts()->all();
+        $user = Auth::user();
+        $posts = $user->likedPosts;
         return response()->json(['posts' => $posts]);
     }
 
     public function likePost(Request $request, Post $post) {
 
         //Get authenticated user
-        $user = $request->user();
-
-        $likePost = Post::findOrFail($post);
 
 
+        $postToLike = Post::findOrFail($post->id);
+        $user = Auth::user();
+        $user->likedPosts()->attach($post);
 
+        return response()->json(['posts'=> $user->likedPosts]);
     }
 }

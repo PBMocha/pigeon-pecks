@@ -17,7 +17,7 @@ class Post extends Model
     /**
      * Get all users that liked this post
      */
-    public function usersByLikes() {
+    public function likedByUsers() {
         return $this->belongsToMany(User::class, 'liked_posts')->withTimestamps();
     }
 
