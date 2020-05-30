@@ -32,7 +32,6 @@ Route::prefix('/user')->group(function() {
         // Route::put('/profile/edit', 'Api\v1\ProfileController@edit');
 
         //Route::get('/feed', 'Api\v1\FeedController@index');
-
         Route::post('/post', 'Api\v1\PostController@store');
         Route::get('/posts', 'Api\v1\UserController@userPosts'); // GET all posts authenticated by user
         Route::get('/liked-posts'); // GET all posts liked by authneticated user

@@ -16,7 +16,6 @@ class UserController extends Controller
     }
 
     public function userPosts() {
-
         return response()->json(['posts' => Auth::user()->posts]);
     }
 }

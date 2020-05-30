@@ -19,18 +19,16 @@ class LikedPostsController extends Controller
      */
     public function index() {
         $user = Auth::user();
-        $posts = $user->likedPosts;
+        $posts = $user->likedPosts();
         return response()->json(['posts' => $posts]);
     }
 
-    public function likePost(Request $request, Post $post) {
+    public function likePost(Request $request, $post) {
 
-        //Get authenticated user
-
-
-        $postToLike = Post::findOrFail($post->id);
+        //Find the post the user likes
+        $postToLike = Post::findOrFail($post);
         $user = Auth::user();
-        $user->likedPosts()->attach($post);
+        $user->likedPosts()->attach($post); // Attach the post the user liked
 
         return response()->json(['posts'=> $user->likedPosts]);
     }
