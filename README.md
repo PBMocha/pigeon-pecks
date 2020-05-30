@@ -16,6 +16,7 @@ Minimum requirements:
 
 Future:
 - Real-time chat integration
+- Possible microservice integration 
 
 ### Front End
 

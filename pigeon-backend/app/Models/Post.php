@@ -14,9 +14,11 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    //TODO: Create relationship with profile
-    public function profile() {
-        $this->belongsTo(User::class);
+    /**
+     * Get all users that liked this post
+     */
+    public function usersByLikes() {
+        return $this->belongsToMany(User::class, 'liked_posts')->withTimestamps();
     }
 
     //TODO: Create relationship with comments

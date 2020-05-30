@@ -31,14 +31,21 @@ Route::prefix('/user')->group(function() {
         Route::get('/profile', 'Api\v1\UserController@index');
         // Route::put('/profile/edit', 'Api\v1\ProfileController@edit');
 
-        //
+        //Route::get('/feed', 'Api\v1\FeedController@index');
+
         Route::post('/post', 'Api\v1\PostController@store');
+        Route::get('/posts', 'Api\v1\UserController@usersPosts'); // GET all posts authenticated by user
+        Route::get('/liked-posts'); // GET all posts liked by authneticated user
+        Route::post('/post/{id}/comment', 'Api\v1\CommentController@store'); // endpoint to store a comment on a post
+        Route::post('/post/{id}/like', 'LikedPostController@likePost'); // endpoint to incmrement a like on a post
 
         // Route::get('/posts/{post}', 'Api/v1/PostsConrtoller@show');
     });
 });
 
+//Public resources that can be accessed
 Route::get('/post/{id}', 'Api\v1\PostController@show');
+Route::get('/post/{id}/comments', 'Api\v1\CommentController@index'); //
 Route::get('/posts/{user?}', 'Api\v1\PostController@postsByUser'); //GET: all posts from a specific user
 
 
