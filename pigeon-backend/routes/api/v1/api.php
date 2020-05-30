@@ -34,9 +34,9 @@ Route::prefix('/user')->group(function() {
         //Route::get('/feed', 'Api\v1\FeedController@index');
         Route::post('/post', 'Api\v1\PostController@store');
         Route::get('/posts', 'Api\v1\UserController@userPosts'); // GET all posts authenticated by user
-        Route::get('/liked-posts'); // GET all posts liked by authneticated user
+        Route::get('/liked-posts', 'Api\v1\LikedPostsController@index'); // GET all posts liked by authneticated user
         Route::post('/post/{id}/comment', 'Api\v1\CommentController@store'); // endpoint to store a comment on a post
-        Route::post('/post/{id}/like', 'LikedPostController@likePost'); // endpoint to incmrement a like on a post
+        Route::post('/post/{id}/like', 'Api\v1\LikedPostsController@likePost'); // endpoint to incmrement a like on a post
 
         // Route::get('/posts/{post}', 'Api/v1/PostsConrtoller@show');
     });
