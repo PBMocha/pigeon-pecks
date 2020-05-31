@@ -19,9 +19,13 @@ function PostList(props) {
     },]);
 
     useEffect(() => {
-
         let postService = new PostService();
-        let posts = postService.getPostByUser(props.user.id);
+        postService.getPostsByUser(props.id).then(res => {
+            console.log(res);
+
+            //return setPosts(res);
+        });
+
         
 
     });

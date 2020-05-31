@@ -11,13 +11,13 @@ function App() {
         <h1>Welcome to pigeons</h1>
       </header>
     </div>
-    
+
     <div className="row justify-content-center mt-4">
       <div className="col">
         This is your posts
       </div>
       <div className="col">
-        <PostList />
+        <PostList id={1} />
       </div>
     </div>
     </div>
