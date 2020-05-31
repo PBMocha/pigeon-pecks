@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Events\PostLiked;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
@@ -28,7 +29,10 @@ class LikedPostsController extends Controller
         //Find the post the user likes
         $postToLike = Post::findOrFail($post);
         $user = Auth::user();
-        $user->likedPosts()->attach($post); // Attach the post the user liked
+        $user->likedPosts()->attach($postToLike); // Attach the post the user liked
+
+        //Fire off event to notify a LikeListener
+        event(new PostLiked($postToLike));
 
         return response()->json(['posts'=> $user->likedPosts]);
     }
@@ -40,6 +44,5 @@ class LikedPostsController extends Controller
         $user = Auth::user();
         $user->likedPosts()->detach($post); // Attach the post the user liked
         return response()->json(['posts'=> $user->likedPosts]);
-
     }
 }
