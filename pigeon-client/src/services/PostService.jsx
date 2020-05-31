@@ -12,7 +12,6 @@ class PostService {
     getPostsByUser(user) {
         const getUrl = this.baseUrl + "/api/posts/" + user;
         
-        
         const result = axios.get(getUrl)
         .then(response => {
             console.log(response.data);
@@ -27,6 +26,7 @@ class PostService {
             return posts;
 
         }).catch(error => console.log(error)) 
+
         return result;
     }
 

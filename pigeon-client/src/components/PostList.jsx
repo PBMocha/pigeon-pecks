@@ -18,19 +18,18 @@ function PostList(props) {
         body: " aiosdj aodsas d"
     },]);
 
+    
+
     useEffect(() => {
         let postService = new PostService();
         postService.getPostsByUser(props.id).then(res => {
             console.log(res);
 
-            //return setPosts(res);
+            setPosts(res);
         });
 
-        
-
-    });
+    }, [props.id]); // empty array runs this only once or if props.id changes
     
-
     return (    
     <div>
     {posts.map((post) => 
