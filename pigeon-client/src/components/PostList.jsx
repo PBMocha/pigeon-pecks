@@ -5,26 +5,12 @@ import '../App.css';
 // A component to display the list of posts
 function PostList(props) {
     
-    const [posts, setPosts] = useState([{
-        title: "A title",
-        body: "another body"
-    },
-    {
-        title: "Testing agin",
-        body: "asdaild adjsas d asdj as"
-    },
-    {
-        title: " asjd aodasd a",
-        body: " aiosdj aodsas d"
-    },]);
-
-    
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         let postService = new PostService();
-        postService.getPostsByUser(props.id).then(res => {
-            console.log(res);
 
+        postService.getPosts(props.id).then(res => {
             setPosts(res);
         });
 
@@ -32,15 +18,18 @@ function PostList(props) {
     
     return (    
     <div>
-    {posts.map((post) => 
+    { posts.map((post) => 
         <div className="card p-2 mt-2 mb-2">
             <div className="card-body">
-                <div className="card-title">
+                <h5 className="card-title">
                     { post.title }
-                </div>
-                <div className="card-title">
+                </h5>
+                <h6 className="card-subtitle mb-3 text-muted">
+                    Homing from { post.author } 
+                </h6>
+                <p className="card-text">
                     { post.body }
-                </div>
+                </p>
             </div>
         </div>
     )}

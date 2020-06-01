@@ -5,21 +5,24 @@ class PostService {
 
     constructor() {
 
-        this.baseUrl = API_BASE;
+        this.baseUrl = API_BASE + "/api";
 
     }
 
-    getPostsByUser(user) {
-        const getUrl = this.baseUrl + "/api/posts/" + user;
+    postApiGetHandler(url) {
+        const getUrl = url;
         
         const result = axios.get(getUrl)
         .then(response => {
             console.log(response.data);
 
-            const posts = response.data.post.map(post => {
+            const json = response.data; // 
+
+            const posts = json.data.map(post => {
                 return {
                     title: post.title,
-                    body: post.body
+                    body: post.body,
+                    author: post.author,
                 };
             });
 
@@ -30,8 +33,15 @@ class PostService {
         return result;
     }
 
-    getPosts() {
+    getPostsByUser(user) {
+        const url = this.baseUrl + "/user/" + user + "/posts";
+        
+        return this.postApiGetHandler(url);
+    }
 
+    getPosts() {
+        const url = this.baseUrl + "/posts";
+        return this.postApiGetHandler(url);
     }
 
 
