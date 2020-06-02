@@ -9,6 +9,7 @@ class PostService {
 
     }
 
+    //This looks ugly lol 
     postApiGetHandler(url) {
         const getUrl = url;
         

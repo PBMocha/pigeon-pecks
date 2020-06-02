@@ -2,10 +2,19 @@ import React, { useState, useEffect} from 'react';
 
 function PostForm() {
 
+    const [form, setForm] = useState({ name: "", });
+    
+    function handleNameChange(form) {
+        
+    }
+
     return (
-        <div>
-            
-            
-        </div>
+    
+        <form className="form">
+
+            <input className="" onChange={handleNameChange}></input>
+            <button type="submit">Submit</button>
+        </form>
+        
     )
 }

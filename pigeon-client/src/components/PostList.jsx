@@ -25,7 +25,7 @@ function PostList(props) {
                     { post.title }
                 </h5>
                 <h6 className="card-subtitle mb-3 text-muted">
-                    Homing from { post.author } 
+                    By { post.author } 
                 </h6>
                 <p className="card-text">
                     { post.body }
