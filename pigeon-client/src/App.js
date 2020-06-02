@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import PostList from './components/PostList';
+import LoginForm from './pages/auth/Login';
 
 function App() {
   return (
@@ -23,15 +24,17 @@ function App() {
       </div>
 
       <div className="row justify-content-center mt-4">
-        <div className="col-m-4">
+        <div className="col">
           This is your posts
         </div>
-        <div className="col-m-4">
-
-        </div>
         { /* Content placeholder */ }
-        <div className="col-m-4">
-          <PostList id={1} />
+        <div className="col">
+        <Switch>
+
+          <Route exact path="/"><PostList id={1} /></Route>
+          <Route path="/login"><LoginForm /></Route>
+
+        </Switch>
         </div>
       </div>
     </div>
