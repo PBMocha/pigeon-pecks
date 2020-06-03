@@ -12,7 +12,10 @@ function PostForm() {
     
         <form className="form">
 
-            <input className="" onChange={handleNameChange}></input>
+            <div>
+                <label></label>
+                <input className="" onChange={handleNameChange}></input>
+            </div>
             <button type="submit">Submit</button>
         </form>
         

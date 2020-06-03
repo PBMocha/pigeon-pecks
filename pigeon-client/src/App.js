@@ -3,7 +3,8 @@ import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import PostList from './components/PostList';
-import LoginForm from './pages/auth/Login';
+import Login  from './components/auth/Login';
+import Register from './components/auth/Register/Register';
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
         <Switch>
 
           <Route exact path="/"><PostList id={1} /></Route>
-          <Route path="/login"><LoginForm /></Route>
+          <Route path="/login"><Login /></Route>
+          <Route path="/register"><Register /></Route>
 
         </Switch>
         </div>

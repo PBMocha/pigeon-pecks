@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import LoginForm from '../../components/auth/LoginForm';
+import LoginForm from './LoginForm';
 
 function Login() {
 
@@ -8,12 +8,12 @@ function Login() {
         <div className="card">
             <div className="card-body">
             <h3 className="card-title">Login:</h3>
-                <div className="card-body">
-                    <LoginForm />
-                </div>
+                
+                <LoginForm />
+                
             </div>
         </div>
     );
 }
 
-export default LoginForm;
+export default Login;
