@@ -4,17 +4,18 @@ import '../App.css';
 
 // A component to display the list of posts
 function PostList(props) {
-    
+
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
+
         let postService = new PostService();
 
-        postService.getPosts(props.id).then(res => {
+        postService.getPosts().then(res => {
             setPosts(res);
         });
 
-    }, [props.id]); // empty array runs this only once or if props.id changes
+    }, []); // empty array runs this only once or if props.id changes
     
     return (    
     <div>
