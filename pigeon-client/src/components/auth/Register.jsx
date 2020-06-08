@@ -1,20 +1,42 @@
 import React, { useState, useEffect, isValidElement } from 'react';
 import axios from 'axios';
-import { API_BASE } from '../../../config/ApiUrls';
+import { API_BASE } from '../../config/ApiUrls';
 
 
 const Register = () => {
 
-    const [data, setData] = useState({}); 
-    const [pwdValid, setPwdValid] = useState(true);
+    const [data, setData] = useState(null); 
     const [IsValid, setIsValid] = useState(true);
+    const [error, setError] = useState(false);
 
     //Send data when registration form is submitted
     useEffect(() => {
         
-        const postUrl = API_BASE + '/api/user/register';
+        //TODO: transfer post request to UserService class
 
-        console.log(data);
+        async function handleRegistration() {
+            const postUrl = API_BASE + '/api/user/register';
+            //console.log(`Sending Request to {postUrl}`);
+
+            const payload = {
+                method: 'post',
+                url: postUrl,
+                data: data,
+                headers: { 'Content-Type': 'application/json'}
+            };
+            axios(payload).then((response) => {
+                //console.log(response);
+                
+            }, (error) => {
+                console.log(error);
+                //TODO: mutate valid state to output validation errors to DOM
+                setError(true);
+            });
+        }
+
+        if (data !== null) {
+            handleRegistration();
+        }
     }, [data]); 
 
     //Use this to toggle error messages
@@ -22,36 +44,24 @@ const Register = () => {
 
     }, [IsValid]);
 
-    const handleSubmit = (event) => {
+    function handleSubmit(event) {
         event.preventDefault();
         const formData = event.target;
 
-        const testForm = new FormData(event.target);
+        const data = new FormData(event.target);
 
-        console.log(testForm);
+        console.log(data);
 
         if (formData.password.value !== formData.c_password.value) {
 
             setIsValid(false);
-
             return;
         }
 
-        const data = {
-            name: formData.name.value,
-            email: formData.email.value,
-            password: formData.password.value,
-            c_password: formData.c_password.value
-        };
-
-    
-        console.log(data);
-
-        setData(formData);
+        setData(data);
     }
 
     return (
-    
         <div className="card">
             <div className="card-body">
                 <h4 className="card-title">Register: </h4>
@@ -71,6 +81,7 @@ const Register = () => {
                     <div className="form-group">
                         <label htmlFor="c-password">Confirm Password</label>
                         <input id="c-password" className="form-control" type="password" name="c_password"required />
+                        { !IsValid && <span className="alert alert-danger mt-4">Passwords are not the same!</span> }
                     </div>
                     <button className="btn btn-primary pr-3 pl-3" type="submit">Register</button>
                 </form>

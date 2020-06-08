@@ -22,8 +22,8 @@ class RegisterController extends Controller
         //Validate request
 
         $validate = validator($request->all(), [
-            'name' => 'required|string|unique:App\User,name',
-            'email' => 'required|email|unique:App\User,email',
+            'name' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
