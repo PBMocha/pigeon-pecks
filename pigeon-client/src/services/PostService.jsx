@@ -1,11 +1,11 @@
-import { API_BASE } from '../config/ApiUrls';
+import { config } from '../config/ApiUrls';
 import axios from 'axios';
 
 class PostService {
 
     constructor() {
 
-        this.baseUrl = API_BASE + "/api";
+        this.baseUrl = config.apiUrl + "/api";
 
     }
 

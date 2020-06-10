@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ApiUrl from '../../config/ApiUrls';
+import { UserService } from '../../services/UserService.jsx'; 
+import axios from 'axios';
 
-function Login() {
+function Login({user}) {
 
     const [form, setForm] = useState({});
 
     useEffect(() => {
-
-        const loginUrl = "/api/user/login";
         
+        async function handleLogin() {
+            const loginUrl = "/api/user/login";
+
+            const payload = {
+                method: 'post',
+                url: loginUrl,
+                data: form,
+                headers: { 'Content-Type': 'application/json'}
+            };
+
+            axios.post(payload).then((response) => {
+                console.log(response);
+                
+            }, (error) => console.log(error));
+        }
+
     }, [form]);
 
     const handleSubmit = (event) => {

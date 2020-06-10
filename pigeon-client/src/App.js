@@ -6,6 +6,8 @@ import PostList from './components/PostList';
 import Login  from './components/auth/Login';
 import Register from './components/auth/Register';
 
+const Context = React.createContext();
+
 
 function App() {
 

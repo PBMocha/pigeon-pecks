@@ -1,6 +1,6 @@
 import React, { useState, useEffect, isValidElement } from 'react';
 import axios from 'axios';
-import { API_BASE } from '../../config/ApiUrls';
+import { config } from '../../config/ApiUrls';
 
 
 const Register = () => {
@@ -15,18 +15,18 @@ const Register = () => {
         //TODO: transfer post request to UserService class
 
         async function handleRegistration() {
-            const postUrl = API_BASE + '/api/user/register';
-            //console.log(`Sending Request to {postUrl}`);
-
+            const postUrl = config.apiUrl + '/api/user/register';
+            
             const payload = {
                 method: 'post',
                 url: postUrl,
                 data: data,
                 headers: { 'Content-Type': 'application/json'}
             };
+
             axios(payload).then((response) => {
-                //console.log(response);
-                
+                console.log(response.data.token);
+                localStorage.setItem("Bearer", response.data.token);
             }, (error) => {
                 console.log(error);
                 //TODO: mutate valid state to output validation errors to DOM
@@ -37,12 +37,10 @@ const Register = () => {
         if (data !== null) {
             handleRegistration();
         }
+
     }, [data]); 
 
     //Use this to toggle error messages
-    useEffect(() => {
-
-    }, [IsValid]);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -50,10 +48,7 @@ const Register = () => {
 
         const data = new FormData(event.target);
 
-        console.log(data);
-
         if (formData.password.value !== formData.c_password.value) {
-
             setIsValid(false);
             return;
         }
@@ -81,7 +76,7 @@ const Register = () => {
                     <div className="form-group">
                         <label htmlFor="c-password">Confirm Password</label>
                         <input id="c-password" className="form-control" type="password" name="c_password"required />
-                        { !IsValid && <span className="alert alert-danger mt-4">Passwords are not the same!</span> }
+                        { !IsValid && <div className="alert alert-danger mt-4">Passwords are not the same!</div> }
                     </div>
                     <button className="btn btn-primary pr-3 pl-3" type="submit">Register</button>
                 </form>
