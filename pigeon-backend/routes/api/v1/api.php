@@ -27,12 +27,12 @@ Route::prefix('/user')->group(function() {
 
     //Will change this later
     Route::get('/{user}/posts', 'Api\v1\PostController@postsByUser');
+    Route::get('/profile', 'Api\v1\UserController@index');
 
     Route::group(['middleware' => ['auth:api']], function () {
 
         Route::get('/logout', 'Api\v1\LoginController@logout');
 
-        Route::get('/profile', 'Api\v1\UserController@index');
         Route::put('/profile/edit', 'Api\v1\ProfileController@edit');
 
         Route::post('/post', 'Api\v1\PostController@store');
@@ -41,8 +41,12 @@ Route::prefix('/user')->group(function() {
         Route::post('/post/{id}/comment', 'Api\v1\CommentController@store'); // endpoint to store a comment on a post
         Route::post('/post/{id}/like', 'Api\v1\LikedPostsController@likePost'); // endpoint to incmrement a like on a post
 
+        //Routes that handles followers
+        Route::get('/following', 'Api\v1\FollowerController@following');
+        Route::get('/followers', 'Api\v1\FollowerController@index');
+        Route::post('/follow/{user}', 'Api\v1\FollowerController@follow');
+        Route::delete('/unfollow/{user}', 'Api\v1\FollowerController@unfollow');
 
-        // Route::get('/posts/{post}', 'Api/v1/PostsConrtoller@show');
     });
 });
 

@@ -13,6 +13,12 @@ class LikedPostsController extends Controller
 {
     //
 
+
+    public function __construct()
+    {
+
+    }
+
     /**
      *  Displays authenticated users liked posts
      *
@@ -24,23 +30,21 @@ class LikedPostsController extends Controller
         return response()->json(['liked-posts' => $posts]);
     }
 
-    public function likePost($post) {
+    public function likePost(Post $post) {
 
         //Find the post the user likes
-        $postToLike = Post::findOrFail($post);
         $user = Auth::user();
-        $user->likedPosts()->attach($postToLike); // Attach the post the user liked
+        $user->likedPosts()->attach($post); // Attach the post the user liked
 
-        //Fire off event to notify a LikeListener
-        event(new PostLiked($postToLike));
+        //Fire off event to notify LikeListener
+        event(new PostLiked($post));
 
         return response()->json(['posts'=> $user->likedPosts]);
     }
 
     // Undo a like on a post
-    public function unlikePost($post) {
+    public function unlikePost(Post $post) {
 
-        $postToLike = Post::findOrFail($post);
         $user = Auth::user();
         $user->likedPosts()->detach($post); // Attach the post the user liked
         return response()->json(['posts'=> $user->likedPosts]);

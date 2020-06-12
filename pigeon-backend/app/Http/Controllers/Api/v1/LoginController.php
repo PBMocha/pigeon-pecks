@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\LoginRequest;
 
 
 class LoginController extends Controller
@@ -16,14 +17,14 @@ class LoginController extends Controller
 
     }
 
-    public function login(Request $request) {
+    public function login(LoginRequest $request) {
 
-        $credentials = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required|string'
-        ]);
+        // $credentials = $request->validate([
+        //     'email' => 'email|required',
+        //     'password' => 'required|string'
+        // ]);
 
-        if(!Auth::attempt($credentials)) {
+        if(!Auth::attempt($request)) {
             return response([ 'message' => 'Invalid Credentials' ], 401);
         }
 
@@ -36,10 +37,10 @@ class LoginController extends Controller
         return response(['user' => Auth::user(), 'token' => $accessToken]);
     }
 
-    public function logout(Request $request) {
+    public function logout() {
 
         $user = Auth::user();
         $success = $user->token()->revoke();
-        return response()->json(['success' => 'Logged out' ] ,200);
+        return response()->json(['success' => $success ] ,200);
     }
 }
